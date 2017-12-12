@@ -3,7 +3,9 @@ package com.tolmachevroman.paymentapp.dagger;
 import android.app.Activity;
 import android.app.Application;
 
+import com.tolmachevroman.paymentapp.BuildConfig;
 import com.tolmachevroman.paymentapp.dagger.components.DaggerAppComponent;
+import com.tolmachevroman.paymentapp.dagger.modules.NetModule;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -23,6 +25,7 @@ public class PaymentApp extends Application implements HasActivityInjector {
 
         DaggerAppComponent
                 .builder()
+                .netModule(new NetModule(BuildConfig.URL))
                 .build()
                 .inject(this);
     }

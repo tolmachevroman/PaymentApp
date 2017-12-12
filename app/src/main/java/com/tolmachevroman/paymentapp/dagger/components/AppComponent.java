@@ -3,6 +3,7 @@ package com.tolmachevroman.paymentapp.dagger.components;
 import com.tolmachevroman.paymentapp.dagger.PaymentApp;
 import com.tolmachevroman.paymentapp.dagger.modules.AppModule;
 import com.tolmachevroman.paymentapp.dagger.modules.BuildersModule;
+import com.tolmachevroman.paymentapp.dagger.modules.NetModule;
 
 import javax.inject.Singleton;
 
@@ -14,7 +15,7 @@ import dagger.android.AndroidInjectionModule;
  */
 
 @Singleton
-@Component(modules = {AndroidInjectionModule.class, AppModule.class, BuildersModule.class})
+@Component(modules = {AndroidInjectionModule.class, AppModule.class, BuildersModule.class, NetModule.class})
 public interface AppComponent {
     void inject(PaymentApp app);
 }
