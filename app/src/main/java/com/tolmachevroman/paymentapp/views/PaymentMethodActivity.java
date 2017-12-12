@@ -6,6 +6,8 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -16,6 +18,7 @@ import com.tolmachevroman.paymentapp.datasources.Resource;
 import com.tolmachevroman.paymentapp.models.paymentmethods.PaymentMethod;
 import com.tolmachevroman.paymentapp.viewmodels.PaymentMethodViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -29,6 +32,12 @@ public class PaymentMethodActivity extends AppCompatActivity {
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
+    @BindView(R.id.paymentMethodsRcl)
+    RecyclerView paymentMethodsView;
+
+    private List<PaymentMethod> paymentMethods;
+    private PaymentMethodsAdapter paymentMethodsAdapter;
+
     private PaymentMethodViewModel paymentMethodViewModel;
 
     @Inject
@@ -41,8 +50,18 @@ public class PaymentMethodActivity extends AppCompatActivity {
         setContentView(R.layout.activity_payment_method);
         ButterKnife.bind(this);
 
-        paymentMethodViewModel = ViewModelProviders.of(this, viewModelFactory).get(PaymentMethodViewModel.class);
+        paymentMethods = new ArrayList<>();
+        paymentMethodsAdapter = new PaymentMethodsAdapter(paymentMethods, new RecyclerViewClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                System.out.println("Clicked: " + paymentMethods.get(position).getName());
+            }
+        });
 
+        paymentMethodsView.setLayoutManager(new LinearLayoutManager(this));
+        paymentMethodsView.setAdapter(paymentMethodsAdapter);
+
+        paymentMethodViewModel = ViewModelProviders.of(this, viewModelFactory).get(PaymentMethodViewModel.class);
         paymentMethodViewModel.getPaymentMethods().observe(this, new Observer<Resource<List<PaymentMethod>>>() {
             @Override
             public void onChanged(@Nullable Resource<List<PaymentMethod>> resource) {
@@ -87,6 +106,8 @@ public class PaymentMethodActivity extends AppCompatActivity {
     }
 
     private void showData(List<PaymentMethod> data) {
-
+        paymentMethods.clear();
+        paymentMethods.addAll(data);
+        paymentMethodsAdapter.notifyDataSetChanged();
     }
 }
