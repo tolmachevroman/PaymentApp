@@ -1,5 +1,6 @@
 package com.tolmachevroman.paymentapp.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -46,7 +47,8 @@ public class AmountActivity extends AppCompatActivity {
         if (amount.isEmpty()) {
             Toast.makeText(this, getString(R.string.input_amount_toast), Toast.LENGTH_SHORT).show();
         } else {
-            //TODO go to the next activity
+            Intent intent = new Intent(this, PaymentMethodActivity.class);
+            startActivity(intent);
         }
     }
 }
