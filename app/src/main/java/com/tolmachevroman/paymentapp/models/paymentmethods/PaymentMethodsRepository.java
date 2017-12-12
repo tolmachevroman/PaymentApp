@@ -19,7 +19,7 @@ public class PaymentMethodsRepository {
         this.webService = webService;
     }
 
-//    public LiveData<List<PaymentMethod>> getPaymentMethods() {
+//    public LiveData<Resource<List<PaymentMethod>>> getPaymentMethods() {
 //
 //    }
 }

@@ -19,23 +19,23 @@ public class Resource<T> {
     public final Status status;
 
     @Nullable
-    public final String message;
+    public final Error error;
 
     @Nullable
     public final T data;
 
-    public Resource(@NonNull Status status, @Nullable T data, @Nullable String message) {
+    public Resource(@NonNull Status status, @Nullable T data, @Nullable Error error) {
         this.status = status;
         this.data = data;
-        this.message = message;
+        this.error = error;
     }
 
     public static <T> Resource<T> success(@Nullable T data) {
         return new Resource<>(Status.SUCCESS, data, null);
     }
 
-    public static <T> Resource<T> error(String msg, @Nullable T data) {
-        return new Resource<>(Status.ERROR, data, msg);
+    public static <T> Resource<T> error(Error error, @Nullable T data) {
+        return new Resource<>(Status.ERROR, data, error);
     }
 
     public static <T> Resource<T> loading(@Nullable T data) {
@@ -55,8 +55,7 @@ public class Resource<T> {
 
         if (status != resource.status) {
             return false;
-        }
-        if (message != null ? !message.equals(resource.message) : resource.message != null) {
+        } else if (error != null ? !error.equals(resource.error) : resource.error != null) {
             return false;
         }
         return data != null ? data.equals(resource.data) : resource.data == null;
@@ -65,7 +64,7 @@ public class Resource<T> {
     @Override
     public int hashCode() {
         int result = status.hashCode();
-        result = 31 * result + (message != null ? message.hashCode() : 0);
+        result = 31 * result + (error != null ? error.hashCode() : 0);
         result = 31 * result + (data != null ? data.hashCode() : 0);
         return result;
     }
@@ -74,7 +73,7 @@ public class Resource<T> {
     public String toString() {
         return "Resource{" +
                 "status=" + status +
-                ", message='" + message + '\'' +
+                ", error='" + error + '\'' +
                 ", data=" + data +
                 '}';
     }

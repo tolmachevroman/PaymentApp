@@ -19,7 +19,7 @@ public class PaymentMethodViewModel extends ViewModel {
         this.paymentMethodsRepository = paymentMethodsRepository;
     }
 
-//    LiveData<List<PaymentMethod>> getPaymentMethods() {
+//    LiveData<Resource<List<PaymentMethod>>> getPaymentMethods() {
 //        return paymentMethodsRepository.getPaymentMethods();
 //    }
 }
