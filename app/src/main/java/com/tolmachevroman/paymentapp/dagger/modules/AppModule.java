@@ -1,6 +1,9 @@
 package com.tolmachevroman.paymentapp.dagger.modules;
 
 import android.app.Application;
+import android.content.Context;
+
+import com.tolmachevroman.paymentapp.utils.Utils;
 
 import javax.inject.Singleton;
 
@@ -23,5 +26,17 @@ public class AppModule {
     @Singleton
     Application provideApplication() {
         return app;
+    }
+
+    @Provides
+    @Singleton
+    Context provideContext() {
+        return app.getApplicationContext();
+    }
+
+    @Provides
+    @Singleton
+    Utils providesUtils() {
+        return new Utils(app);
     }
 }
