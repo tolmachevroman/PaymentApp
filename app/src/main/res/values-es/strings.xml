@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PaymentApp</string>
+
+    <string name="continue_btn">Continuar</string>
+    <string name="input_amount">Monto del pago</string>
+    <string name="input_amount_toast">Por favor, ingresa el monto para pagar</string>
+</resources>

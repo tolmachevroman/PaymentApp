@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PaymentApp</string>
+
+    <string name="continue_btn">Continue</string>
+    <string name="input_amount">Payment amount</string>
+    <string name="input_amount_toast">Please, input payment amount</string>
 </resources>
