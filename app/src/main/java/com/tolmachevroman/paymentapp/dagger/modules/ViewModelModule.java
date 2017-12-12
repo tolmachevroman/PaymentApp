@@ -12,7 +12,7 @@ import dagger.Module;
  */
 
 @Module
-abstract class ViewModelModule {
+public abstract class ViewModelModule {
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);

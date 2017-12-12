@@ -8,9 +8,8 @@ import dagger.android.ContributesAndroidInjector;
 /**
  * Created by romantolmachev on 12/12/2017.
  */
-
 @Module
-abstract class BuildersModule {
+public abstract class BuildersModule {
 
     @ContributesAndroidInjector
     abstract AmountActivity contributeAamountActivity();
