@@ -11,7 +11,7 @@ import android.support.annotation.Nullable;
  */
 public class Resource<T> {
 
-    enum Status {
+    public enum Status {
         SUCCESS, ERROR, LOADING
     }
 

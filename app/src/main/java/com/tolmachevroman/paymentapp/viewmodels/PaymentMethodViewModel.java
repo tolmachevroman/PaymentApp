@@ -1,8 +1,13 @@
 package com.tolmachevroman.paymentapp.viewmodels;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.tolmachevroman.paymentapp.datasources.Resource;
+import com.tolmachevroman.paymentapp.models.paymentmethods.PaymentMethod;
 import com.tolmachevroman.paymentapp.models.paymentmethods.PaymentMethodsRepository;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -12,14 +17,14 @@ import javax.inject.Inject;
 
 public class PaymentMethodViewModel extends ViewModel {
 
-    private PaymentMethodsRepository paymentMethodsRepository;
+    private LiveData<Resource<List<PaymentMethod>>> paymentMethods;
 
     @Inject
     public PaymentMethodViewModel(PaymentMethodsRepository paymentMethodsRepository) {
-        this.paymentMethodsRepository = paymentMethodsRepository;
+        paymentMethods = paymentMethodsRepository.getPaymentMethods();
     }
 
-//    LiveData<Resource<List<PaymentMethod>>> getPaymentMethods() {
-//        return paymentMethodsRepository.getPaymentMethods();
-//    }
+    public LiveData<Resource<List<PaymentMethod>>> getPaymentMethods() {
+        return paymentMethods;
+    }
 }
