@@ -5,6 +5,10 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.inject.Singleton;
+
 /**
  * Created by romantolmachev on 12/12/2017.
  */
