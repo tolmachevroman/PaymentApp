@@ -11,7 +11,7 @@ import retrofit2.http.GET;
  * Created by romantolmachev on 12/12/2017.
  */
 
-interface WebService {
+public interface WebService {
     @GET("payment_methods")
     Call<List<PaymentMethod>> getPaymentMethods();
 }
