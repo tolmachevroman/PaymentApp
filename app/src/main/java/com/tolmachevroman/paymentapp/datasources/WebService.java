@@ -1,6 +1,6 @@
 package com.tolmachevroman.paymentapp.datasources;
 
-import com.tolmachevroman.paymentapp.models.PaymentMethod;
+import com.tolmachevroman.paymentapp.models.paymentmethods.PaymentMethod;
 
 import java.util.List;
 

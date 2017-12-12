@@ -5,6 +5,7 @@ import android.app.Application;
 
 import com.tolmachevroman.paymentapp.BuildConfig;
 import com.tolmachevroman.paymentapp.dagger.components.DaggerAppComponent;
+import com.tolmachevroman.paymentapp.dagger.modules.AppModule;
 import com.tolmachevroman.paymentapp.dagger.modules.NetModule;
 
 import javax.inject.Inject;
@@ -28,6 +29,7 @@ public class PaymentApp extends Application implements HasActivityInjector {
 
         DaggerAppComponent
                 .builder()
+                .appModule(new AppModule(this))
                 .netModule(new NetModule(BuildConfig.URL))
                 .build()
                 .inject(this);

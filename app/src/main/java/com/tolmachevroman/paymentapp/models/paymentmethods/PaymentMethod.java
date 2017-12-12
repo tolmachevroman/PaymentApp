@@ -1,4 +1,4 @@
-package com.tolmachevroman.paymentapp.models;
+package com.tolmachevroman.paymentapp.models.paymentmethods;
 
 import com.google.gson.annotations.SerializedName;
 
