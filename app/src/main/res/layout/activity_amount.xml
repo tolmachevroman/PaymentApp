@@ -27,6 +27,7 @@
         android:layout_marginTop="200dp"
         android:ems="10"
         android:hint="@string/input_amount"
+        android:imeOptions="actionDone"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
