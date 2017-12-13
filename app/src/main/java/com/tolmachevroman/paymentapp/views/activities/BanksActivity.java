@@ -59,7 +59,7 @@ public class BanksActivity extends AppCompatActivity {
                 String bankId = banks.get(position).getId();
                 if (bankId != null) {
                     Bundle args = new Bundle(getIntent().getExtras());
-                    args.putString(Constants.BANK_ID, bankId);
+                    args.putString(Constants.ISSUER_ID, bankId);
 
                     Intent intent = new Intent(BanksActivity.this, PaymentSharesActivity.class);
                     intent.putExtras(args);

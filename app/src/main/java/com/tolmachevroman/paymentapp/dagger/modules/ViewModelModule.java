@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProvider;
 import com.tolmachevroman.paymentapp.dagger.ViewModelKey;
 import com.tolmachevroman.paymentapp.viewmodels.BanksViewModel;
 import com.tolmachevroman.paymentapp.viewmodels.PaymentMethodViewModel;
+import com.tolmachevroman.paymentapp.viewmodels.PaymentSharesViewModel;
 import com.tolmachevroman.paymentapp.viewmodels.ViewModelFactory;
 
 import dagger.Binds;
@@ -28,6 +29,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(BanksViewModel.class)
     abstract ViewModel bindBanksViewModel(BanksViewModel banksViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PaymentSharesViewModel.class)
+    abstract ViewModel bindPaymentSharesViewModel(PaymentSharesViewModel paymentSharesViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
