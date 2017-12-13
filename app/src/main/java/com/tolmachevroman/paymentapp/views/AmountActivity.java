@@ -45,7 +45,7 @@ public class AmountActivity extends AppCompatActivity {
     public void onContinueClicked(View view) {
         String amount = amountTxt.getText().toString();
         if (amount.isEmpty()) {
-            Toast.makeText(this, getString(R.string.input_amount_toast), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.please_input_amount_toast), Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(this, PaymentMethodActivity.class);
             startActivity(intent);

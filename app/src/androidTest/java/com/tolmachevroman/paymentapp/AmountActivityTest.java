@@ -45,7 +45,7 @@ public class AmountActivityTest {
     @Test
     public void shouldShowToastIfAmountIsEmpty() {
         onView(withId(R.id.continueBtn)).perform(click());
-        onView(withText(R.string.input_amount_toast)).
+        onView(withText(R.string.please_input_amount_toast)).
                 inRoot(withDecorView(not(is(activityRule.getActivity().getWindow().getDecorView())))).
                 check(matches(isDisplayed()));
     }
