@@ -1,6 +1,9 @@
 package com.tolmachevroman.paymentapp.viewmodels;
 
+import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 
 import com.tolmachevroman.paymentapp.datasources.Resource;
@@ -17,15 +20,25 @@ import javax.inject.Inject;
 
 public class BanksViewModel extends ViewModel {
 
-    private LiveData<Resource<List<Bank>>> banks;
+    private BanksRepository repository;
+
+    private MutableLiveData<String> paymentMethodId = new MutableLiveData<>();
 
     @Inject
     public BanksViewModel(BanksRepository repository) {
-        //TODO make as Transformation
-        this.banks = repository.getBanks("");
+        this.repository = repository;
     }
 
     public LiveData<Resource<List<Bank>>> getBanks() {
-        return banks;
+        return Transformations.switchMap(paymentMethodId, new Function<String, LiveData<Resource<List<Bank>>>>() {
+            @Override
+            public LiveData<Resource<List<Bank>>> apply(String input) {
+                return repository.getBanks(input);
+            }
+        });
+    }
+
+    public void setPaymentMethodId(String paymentMethodId) {
+        this.paymentMethodId.setValue(paymentMethodId);
     }
 }

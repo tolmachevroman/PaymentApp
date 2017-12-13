@@ -4,8 +4,8 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.tolmachevroman.paymentapp.utils.Constants;
-import com.tolmachevroman.paymentapp.views.AmountActivity;
-import com.tolmachevroman.paymentapp.views.PaymentMethodActivity;
+import com.tolmachevroman.paymentapp.views.activities.AmountActivity;
+import com.tolmachevroman.paymentapp.views.activities.PaymentMethodActivity;
 
 import org.junit.Rule;
 import org.junit.Test;

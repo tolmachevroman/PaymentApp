@@ -1,9 +1,8 @@
-package com.tolmachevroman.paymentapp.views;
+package com.tolmachevroman.paymentapp.views.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,9 +15,10 @@ import android.widget.Toast;
 import com.tolmachevroman.paymentapp.R;
 import com.tolmachevroman.paymentapp.datasources.Error;
 import com.tolmachevroman.paymentapp.datasources.Resource;
-import com.tolmachevroman.paymentapp.models.paymentmethods.PaymentMethod;
-import com.tolmachevroman.paymentapp.utils.Constants;
-import com.tolmachevroman.paymentapp.viewmodels.PaymentMethodViewModel;
+import com.tolmachevroman.paymentapp.models.banks.Bank;
+import com.tolmachevroman.paymentapp.viewmodels.BanksViewModel;
+import com.tolmachevroman.paymentapp.views.adapters.BanksAdapter;
+import com.tolmachevroman.paymentapp.views.adapters.RecyclerViewClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,18 +29,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
-public class PaymentMethodActivity extends AppCompatActivity {
+public class BanksActivity extends AppCompatActivity {
 
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
-    @BindView(R.id.paymentMethodsRcl)
-    RecyclerView paymentMethodsView;
+    @BindView(R.id.banksRcl)
+    RecyclerView banksView;
 
-    private List<PaymentMethod> paymentMethods;
-    private PaymentMethodsAdapter paymentMethodsAdapter;
-
-    private PaymentMethodViewModel paymentMethodViewModel;
+    private List<Bank> banks;
+    private BanksAdapter banksAdapter;
+    private BanksViewModel banksViewModel;
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -49,32 +48,25 @@ public class PaymentMethodActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_payment_method);
+        setContentView(R.layout.activity_banks);
         ButterKnife.bind(this);
 
-        paymentMethods = new ArrayList<>();
-        paymentMethodsAdapter = new PaymentMethodsAdapter(paymentMethods, new RecyclerViewClickListener() {
+        banks = new ArrayList<>();
+        banksAdapter = new BanksAdapter(banks, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Bundle args = new Bundle(getIntent().getExtras());
-                args.putString(Constants.PAYMENT_METHOD_ID, paymentMethods.get(position).getId());
-                Intent intent = new Intent(PaymentMethodActivity.this, BanksActivity.class);
-                startActivity(intent);
             }
         });
 
-        paymentMethodsView.setLayoutManager(new LinearLayoutManager(this));
-        paymentMethodsView.setAdapter(paymentMethodsAdapter);
+        banksView.setLayoutManager(new LinearLayoutManager(this));
+        banksView.setAdapter(banksAdapter);
 
-        paymentMethodViewModel = ViewModelProviders.of(this, viewModelFactory).get(PaymentMethodViewModel.class);
-        paymentMethodViewModel.getPaymentMethods().observe(this, new Observer<Resource<List<PaymentMethod>>>() {
+        banksViewModel = ViewModelProviders.of(this, viewModelFactory).get(BanksViewModel.class);
+        banksViewModel.getBanks().observe(this, new Observer<Resource<List<Bank>>>() {
             @Override
-            public void onChanged(@Nullable Resource<List<PaymentMethod>> resource) {
+            public void onChanged(@Nullable Resource<List<Bank>> resource) {
 
                 if(resource != null) {
-
-                    System.out.println("STATUS is: " + resource.status);
-
                     switch (resource.status) {
 
                         case SUCCESS:
@@ -91,11 +83,11 @@ public class PaymentMethodActivity extends AppCompatActivity {
                             showLoading();
                             break;
                     }
-
                 }
 
             }
         });
+        banksViewModel.setPaymentMethodId("amex");
     }
 
     private void showLoading() {
@@ -110,9 +102,9 @@ public class PaymentMethodActivity extends AppCompatActivity {
         Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show();
     }
 
-    private void showData(List<PaymentMethod> data) {
-        paymentMethods.clear();
-        paymentMethods.addAll(data);
-        paymentMethodsAdapter.notifyDataSetChanged();
+    private void showData(List<Bank> data) {
+        banks.clear();
+        banks.addAll(data);
+        banksAdapter.notifyDataSetChanged();
     }
 }

@@ -1,4 +1,4 @@
-package com.tolmachevroman.paymentapp.views;
+package com.tolmachevroman.paymentapp.views.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -26,7 +26,7 @@ public class PaymentMethodsAdapter extends RecyclerView.Adapter<PaymentMethodsAd
     private List<PaymentMethod> paymentMethods;
     private RecyclerViewClickListener recyclerViewClickListener;
 
-    PaymentMethodsAdapter(List<PaymentMethod> paymentMethods, RecyclerViewClickListener recyclerViewClickListener) {
+    public PaymentMethodsAdapter(List<PaymentMethod> paymentMethods, RecyclerViewClickListener recyclerViewClickListener) {
         this.paymentMethods = paymentMethods;
         this.recyclerViewClickListener = recyclerViewClickListener;
     }

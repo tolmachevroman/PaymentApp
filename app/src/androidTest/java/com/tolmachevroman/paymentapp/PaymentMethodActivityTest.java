@@ -3,7 +3,7 @@ package com.tolmachevroman.paymentapp;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.tolmachevroman.paymentapp.views.PaymentMethodActivity;
+import com.tolmachevroman.paymentapp.views.activities.PaymentMethodActivity;
 
 import org.junit.Rule;
 import org.junit.Test;

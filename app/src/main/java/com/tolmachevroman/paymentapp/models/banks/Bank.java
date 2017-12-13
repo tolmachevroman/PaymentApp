@@ -16,4 +16,16 @@ public class Bank {
 
     @SerializedName("name")
     private String name;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
