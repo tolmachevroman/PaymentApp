@@ -2,6 +2,7 @@ package com.tolmachevroman.paymentapp.models.paymentmethods;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.content.Context;
 
 import com.tolmachevroman.paymentapp.BuildConfig;
 import com.tolmachevroman.paymentapp.datasources.Error;
@@ -29,19 +30,19 @@ import retrofit2.Response;
 public class PaymentMethodsRepository {
 
     private WebService webService;
-    private Utils utils;
+    private Context context;
 
     @Inject
-    public PaymentMethodsRepository(WebService webService, Utils utils) {
+    public PaymentMethodsRepository(WebService webService, Context context) {
         this.webService = webService;
-        this.utils = utils;
+        this.context = context;
     }
 
     public LiveData<Resource<List<PaymentMethod>>> getPaymentMethods() {
 
         final MutableLiveData<Resource<List<PaymentMethod>>> result = new MutableLiveData<>();
 
-        if (utils.hasConnection()) {
+        if (Utils.hasConnection(context)) {
             result.setValue(Resource.<List<PaymentMethod>>loading(null));
             Call<List<PaymentMethod>> call = webService.getPaymentMethods(BuildConfig.PUBLIC_KEY);
             call.enqueue(new Callback<List<PaymentMethod>>() {

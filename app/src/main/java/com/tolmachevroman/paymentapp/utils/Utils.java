@@ -9,24 +9,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 /**
  * Created by romantolmachev on 12/12/2017.
  */
 
-@Singleton
 public class Utils {
 
-    private Context context;
-
-    @Inject
-    public Utils(Context context) {
-        this.context = context;
-    }
-
-    public boolean hasConnection() {
+    public static boolean hasConnection(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if(cm != null) {
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -52,6 +41,6 @@ public class Utils {
                 e.printStackTrace();
             }
         }
-        return sb.toString();
+        return sb.toString().trim();
     }
 }
