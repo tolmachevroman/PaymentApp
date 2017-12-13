@@ -3,6 +3,8 @@ package com.tolmachevroman.paymentapp.dagger.modules;
 import android.app.Application;
 import android.content.Context;
 
+import com.tolmachevroman.paymentapp.utils.Utils;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -32,4 +34,9 @@ public class AppModule {
         return app.getApplicationContext();
     }
 
+    @Provides
+    @Singleton
+    Utils providesUtils() {
+        return new Utils(app);
+    }
 }

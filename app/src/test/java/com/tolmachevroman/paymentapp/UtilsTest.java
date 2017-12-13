@@ -34,16 +34,17 @@ public class UtilsTest {
         ConnectivityManager connManager = mock(ConnectivityManager.class);
         NetworkInfo networkInfo = mock(NetworkInfo.class);
         PackageManager packageManager = mock(PackageManager.class);
+        Utils utils = new Utils(context);
 
         when(context.getPackageManager()).thenReturn(packageManager);
         when(context.getSystemService(Context.CONNECTIVITY_SERVICE)).thenReturn(connManager);
         when(connManager.getActiveNetworkInfo()).thenReturn(networkInfo);
         when(networkInfo.isAvailable()).thenReturn(true);
         when(networkInfo.isConnected()).thenReturn(true);
-        assertTrue(Utils.hasConnection(context));
+        assertTrue(utils.hasConnection());
 
         when(networkInfo.isConnected()).thenReturn(false);
-        assertFalse(Utils.hasConnection(context));
+        assertFalse(utils.hasConnection());
     }
 
     @Test
