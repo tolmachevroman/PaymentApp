@@ -3,7 +3,12 @@ package com.tolmachevroman.paymentapp.dagger;
 import android.app.Activity;
 import android.app.Application;
 
+import com.tolmachevroman.paymentapp.BuildConfig;
 import com.tolmachevroman.paymentapp.dagger.components.DaggerAppComponent;
+import com.tolmachevroman.paymentapp.dagger.modules.AppModule;
+import com.tolmachevroman.paymentapp.dagger.modules.NetModule;
+
+import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -15,7 +20,8 @@ import dagger.android.HasActivityInjector;
 
 public class PaymentApp extends Application implements HasActivityInjector {
 
-    private DispatchingAndroidInjector<Activity> activityInjector;
+    @Inject
+    DispatchingAndroidInjector<Activity> activityInjector;
 
     @Override
     public void onCreate() {
@@ -23,6 +29,8 @@ public class PaymentApp extends Application implements HasActivityInjector {
 
         DaggerAppComponent
                 .builder()
+                .appModule(new AppModule(this))
+                .netModule(new NetModule(BuildConfig.URL))
                 .build()
                 .inject(this);
     }
