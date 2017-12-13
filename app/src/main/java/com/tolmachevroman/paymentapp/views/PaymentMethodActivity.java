@@ -3,6 +3,7 @@ package com.tolmachevroman.paymentapp.views;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.tolmachevroman.paymentapp.R;
 import com.tolmachevroman.paymentapp.datasources.Error;
 import com.tolmachevroman.paymentapp.datasources.Resource;
 import com.tolmachevroman.paymentapp.models.paymentmethods.PaymentMethod;
+import com.tolmachevroman.paymentapp.utils.Constants;
 import com.tolmachevroman.paymentapp.viewmodels.PaymentMethodViewModel;
 
 import java.util.ArrayList;
@@ -54,9 +56,10 @@ public class PaymentMethodActivity extends AppCompatActivity {
         paymentMethodsAdapter = new PaymentMethodsAdapter(paymentMethods, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                System.out.println("Clicked: " + paymentMethods.get(position).getName());
                 Bundle args = new Bundle(getIntent().getExtras());
-                //TODO start new activity with args
+                args.putString(Constants.PAYMENT_METHOD_ID, paymentMethods.get(position).getId());
+                Intent intent = new Intent(PaymentMethodActivity.this, BanksActivity.class);
+                startActivity(intent);
             }
         });
 

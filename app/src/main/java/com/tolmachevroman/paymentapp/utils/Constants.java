@@ -10,5 +10,6 @@ import javax.inject.Singleton;
 public class Constants {
 
     public static final String AMOUNT = "AMOUNT";
+    public static final String PAYMENT_METHOD_ID = "PAYMENT_METHOD_ID";
 
 }
