@@ -1,5 +1,6 @@
 package com.tolmachevroman.paymentapp.views;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.tolmachevroman.paymentapp.R;
 import com.tolmachevroman.paymentapp.models.paymentmethods.PaymentMethod;
 
@@ -24,7 +26,7 @@ public class PaymentMethodsAdapter extends RecyclerView.Adapter<PaymentMethodsAd
     private List<PaymentMethod> paymentMethods;
     private RecyclerViewClickListener recyclerViewClickListener;
 
-    public PaymentMethodsAdapter(List<PaymentMethod> paymentMethods, RecyclerViewClickListener recyclerViewClickListener) {
+    PaymentMethodsAdapter(List<PaymentMethod> paymentMethods, RecyclerViewClickListener recyclerViewClickListener) {
         this.paymentMethods = paymentMethods;
         this.recyclerViewClickListener = recyclerViewClickListener;
     }
@@ -56,15 +58,21 @@ public class PaymentMethodsAdapter extends RecyclerView.Adapter<PaymentMethodsAd
         TextView cardTxt;
 
         private RecyclerViewClickListener recyclerViewClickListener;
+        private Context context;
 
         ViewHolder(View itemView, RecyclerViewClickListener recyclerViewClickListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.recyclerViewClickListener = recyclerViewClickListener;
+            this.context = itemView.getContext();
             itemView.setOnClickListener(this);
         }
 
         void bind(PaymentMethod item) {
+
+            if (item.getThumbnail() != null && !item.getThumbnail().isEmpty()) {
+                Picasso.with(context).load(item.getThumbnail()).resize(48, 48).centerInside().into(cardImg);
+            }
 
             if (item.getName() != null)
                 cardTxt.setText(item.getName());
