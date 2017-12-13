@@ -42,8 +42,6 @@ public class PaymentMethodActivity extends AppCompatActivity {
     private List<PaymentMethod> paymentMethods;
     private PaymentMethodsAdapter paymentMethodsAdapter;
 
-    private PaymentMethodViewModel paymentMethodViewModel;
-
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
@@ -58,18 +56,23 @@ public class PaymentMethodActivity extends AppCompatActivity {
         paymentMethodsAdapter = new PaymentMethodsAdapter(paymentMethods, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Bundle args = new Bundle(getIntent().getExtras());
-                args.putString(Constants.PAYMENT_METHOD_ID, paymentMethods.get(position).getId());
-                Intent intent = new Intent(PaymentMethodActivity.this, BanksActivity.class);
-                startActivity(intent);
+                String methodPaymentId = paymentMethods.get(position).getId();
+                if(methodPaymentId != null) {
+                    Bundle args = new Bundle(getIntent().getExtras());
+                    args.putString(Constants.PAYMENT_METHOD_ID, methodPaymentId);
+
+                    Intent intent = new Intent(PaymentMethodActivity.this, BanksActivity.class);
+                    intent.putExtras(args);
+                    startActivity(intent);
+                }
             }
         });
 
         paymentMethodsView.setLayoutManager(new LinearLayoutManager(this));
         paymentMethodsView.setAdapter(paymentMethodsAdapter);
 
-        paymentMethodViewModel = ViewModelProviders.of(this, viewModelFactory).get(PaymentMethodViewModel.class);
-        paymentMethodViewModel.getPaymentMethods().observe(this, new Observer<Resource<List<PaymentMethod>>>() {
+        PaymentMethodViewModel paymentMethodViewModel = ViewModelProviders.of(this, viewModelFactory).get(PaymentMethodViewModel.class);
+        paymentMethodViewModel.paymentMethods.observe(this, new Observer<Resource<List<PaymentMethod>>>() {
             @Override
             public void onChanged(@Nullable Resource<List<PaymentMethod>> resource) {
 

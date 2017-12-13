@@ -17,14 +17,11 @@ import javax.inject.Inject;
 
 public class PaymentMethodViewModel extends ViewModel {
 
-    private LiveData<Resource<List<PaymentMethod>>> paymentMethods;
+    public LiveData<Resource<List<PaymentMethod>>> paymentMethods;
 
     @Inject
     public PaymentMethodViewModel(PaymentMethodsRepository paymentMethodsRepository) {
         paymentMethods = paymentMethodsRepository.getPaymentMethods();
     }
 
-    public LiveData<Resource<List<PaymentMethod>>> getPaymentMethods() {
-        return paymentMethods;
-    }
 }

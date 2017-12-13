@@ -16,6 +16,7 @@ import com.tolmachevroman.paymentapp.R;
 import com.tolmachevroman.paymentapp.datasources.Error;
 import com.tolmachevroman.paymentapp.datasources.Resource;
 import com.tolmachevroman.paymentapp.models.banks.Bank;
+import com.tolmachevroman.paymentapp.utils.Constants;
 import com.tolmachevroman.paymentapp.viewmodels.BanksViewModel;
 import com.tolmachevroman.paymentapp.views.adapters.BanksAdapter;
 import com.tolmachevroman.paymentapp.views.adapters.RecyclerViewClickListener;
@@ -39,7 +40,6 @@ public class BanksActivity extends AppCompatActivity {
 
     private List<Bank> banks;
     private BanksAdapter banksAdapter;
-    private BanksViewModel banksViewModel;
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -61,8 +61,8 @@ public class BanksActivity extends AppCompatActivity {
         banksView.setLayoutManager(new LinearLayoutManager(this));
         banksView.setAdapter(banksAdapter);
 
-        banksViewModel = ViewModelProviders.of(this, viewModelFactory).get(BanksViewModel.class);
-        banksViewModel.getBanks().observe(this, new Observer<Resource<List<Bank>>>() {
+        BanksViewModel banksViewModel = ViewModelProviders.of(this, viewModelFactory).get(BanksViewModel.class);
+        banksViewModel.banks.observe(this, new Observer<Resource<List<Bank>>>() {
             @Override
             public void onChanged(@Nullable Resource<List<Bank>> resource) {
 
@@ -87,7 +87,12 @@ public class BanksActivity extends AppCompatActivity {
 
             }
         });
-        banksViewModel.setPaymentMethodId("amex");
+
+        if(banksViewModel.getPaymentMethodId() == null) {
+            String methodPaymentId = getIntent().getStringExtra(Constants.PAYMENT_METHOD_ID);
+            banksViewModel.setPaymentMethodId(methodPaymentId);
+        }
+
     }
 
     private void showLoading() {

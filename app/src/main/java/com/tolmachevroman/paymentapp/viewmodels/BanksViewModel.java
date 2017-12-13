@@ -29,13 +29,15 @@ public class BanksViewModel extends ViewModel {
         this.repository = repository;
     }
 
-    public LiveData<Resource<List<Bank>>> getBanks() {
-        return Transformations.switchMap(paymentMethodId, new Function<String, LiveData<Resource<List<Bank>>>>() {
-            @Override
-            public LiveData<Resource<List<Bank>>> apply(String input) {
-                return repository.getBanks(input);
-            }
-        });
+    public LiveData<Resource<List<Bank>>> banks = Transformations.switchMap(paymentMethodId, new Function<String, LiveData<Resource<List<Bank>>>>() {
+        @Override
+        public LiveData<Resource<List<Bank>>> apply(String input) {
+            return repository.getBanks(input);
+        }
+    });
+
+    public String getPaymentMethodId() {
+        return paymentMethodId.getValue();
     }
 
     public void setPaymentMethodId(String paymentMethodId) {
