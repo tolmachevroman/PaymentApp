@@ -6,4 +6,9 @@
     <string name="please_select_payment_method">Please, select payment method</string>
     <string name="please_select_bank">Please, select bank</string>
     <string name="please_select_payment_shares">Please, select payment shares</string>
+
+    <string name="amount">Amount: %s</string>
+    <string name="payment_method">Payment method: %s</string>
+    <string name="issuer">Issuer: %s</string>
+    <string name="installment">Installment: %s</string>
 </resources>

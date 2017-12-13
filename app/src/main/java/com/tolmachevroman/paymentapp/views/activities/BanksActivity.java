@@ -33,6 +33,8 @@ import dagger.android.AndroidInjection;
 
 public class BanksActivity extends AppCompatActivity {
 
+    static final int INSTALLMENTS_REQUEST = 102;
+
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
@@ -44,6 +46,16 @@ public class BanksActivity extends AppCompatActivity {
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == INSTALLMENTS_REQUEST && resultCode == RESULT_OK) {
+            Intent intent = new Intent();
+            intent.putExtras(data);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +75,7 @@ public class BanksActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(BanksActivity.this, PaymentSharesActivity.class);
                     intent.putExtras(args);
-                    startActivity(intent);
+                    startActivityForResult(intent, INSTALLMENTS_REQUEST);
                 }
             }
         });

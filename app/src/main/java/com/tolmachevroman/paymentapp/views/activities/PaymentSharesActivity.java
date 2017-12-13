@@ -3,6 +3,7 @@ package com.tolmachevroman.paymentapp.views.activities;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -56,7 +57,14 @@ public class PaymentSharesActivity extends AppCompatActivity {
         installmentsAdapter = new InstallmentsAdapter(payerCosts, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-
+                Intent intent = new Intent();
+                Bundle args = getIntent().getExtras();
+                if(args != null) {
+                    args.putString(Constants.INSTALLMENT, payerCosts.get(position).getRecommendedMessage());
+                    intent.putExtras(args);
+                }
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
 
