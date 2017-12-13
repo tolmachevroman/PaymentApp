@@ -1,5 +1,6 @@
 package com.tolmachevroman.paymentapp.datasources;
 
+import com.tolmachevroman.paymentapp.models.banks.Bank;
 import com.tolmachevroman.paymentapp.models.paymentmethods.PaymentMethod;
 
 import java.util.List;
@@ -15,4 +16,8 @@ import retrofit2.http.Query;
 public interface WebService {
     @GET("payment_methods")
     Call<List<PaymentMethod>> getPaymentMethods(@Query("public_key") String publicKey);
+
+    @GET("payment_methods/card_issuers")
+    Call<List<Bank>> getBanks(@Query("public_key") String publicKey,
+                              @Query("payment_method_id") String paymentMethodId);
 }

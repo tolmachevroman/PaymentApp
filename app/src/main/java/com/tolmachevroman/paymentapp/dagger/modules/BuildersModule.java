@@ -1,5 +1,6 @@
 package com.tolmachevroman.paymentapp.dagger.modules;
 
+import com.tolmachevroman.paymentapp.views.BanksActivity;
 import com.tolmachevroman.paymentapp.views.PaymentMethodActivity;
 
 import dagger.Module;
@@ -13,4 +14,7 @@ public abstract class BuildersModule {
 
     @ContributesAndroidInjector
     abstract PaymentMethodActivity contributePaymentMethodActivity();
+
+    @ContributesAndroidInjector
+    abstract BanksActivity contributeBanksActivity();
 }
