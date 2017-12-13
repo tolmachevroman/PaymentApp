@@ -3,6 +3,7 @@ package com.tolmachevroman.paymentapp.views.activities;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +56,15 @@ public class BanksActivity extends AppCompatActivity {
         banksAdapter = new BanksAdapter(banks, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
+                String bankId = banks.get(position).getId();
+                if (bankId != null) {
+                    Bundle args = new Bundle(getIntent().getExtras());
+                    args.putString(Constants.BANK_ID, bankId);
+
+                    Intent intent = new Intent(BanksActivity.this, PaymentSharesActivity.class);
+                    intent.putExtras(args);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -66,17 +76,17 @@ public class BanksActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable Resource<List<Bank>> resource) {
 
-                if(resource != null) {
+                if (resource != null) {
                     switch (resource.status) {
 
                         case SUCCESS:
                             hideLoading();
-                            if(resource.data != null && !resource.data.isEmpty())
+                            if (resource.data != null && !resource.data.isEmpty())
                                 showData(resource.data);
                             break;
                         case ERROR:
                             hideLoading();
-                            if(resource.error != null)
+                            if (resource.error != null)
                                 showError(resource.error);
                             break;
                         case LOADING:
@@ -88,7 +98,7 @@ public class BanksActivity extends AppCompatActivity {
             }
         });
 
-        if(banksViewModel.getPaymentMethodId() == null) {
+        if (banksViewModel.getPaymentMethodId() == null) {
             String methodPaymentId = getIntent().getStringExtra(Constants.PAYMENT_METHOD_ID);
             banksViewModel.setPaymentMethodId(methodPaymentId);
         }
