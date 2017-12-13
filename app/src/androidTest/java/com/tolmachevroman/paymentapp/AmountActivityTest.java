@@ -4,8 +4,8 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.tolmachevroman.paymentapp.utils.Constants;
-import com.tolmachevroman.paymentapp.views.AmountActivity;
-import com.tolmachevroman.paymentapp.views.PaymentMethodActivity;
+import com.tolmachevroman.paymentapp.views.activities.AmountActivity;
+import com.tolmachevroman.paymentapp.views.activities.PaymentMethodActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -69,10 +69,10 @@ public class AmountActivityTest {
     }
 
     /**
-     * Check that non zero amount successfully continues to PaymentMethodActivity, with amount in extras
+     * Check that non zero amount successfully starts PaymentMethodActivity, with amount in extras
      */
     @Test
-    public void nonZeroAmountContinuesToPaymentMethodActivity() {
+    public void nonZeroAmountStartsPaymentMethodActivity() {
         onView(withId(R.id.amountTxt)).perform(typeText("1"), pressImeActionButton());
         intended(allOf(hasExtra(Constants.AMOUNT, "1"), hasComponent(PaymentMethodActivity.class.getName())));
     }

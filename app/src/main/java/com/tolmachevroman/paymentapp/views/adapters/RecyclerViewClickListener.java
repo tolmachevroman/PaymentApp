@@ -1,4 +1,4 @@
-package com.tolmachevroman.paymentapp.views;
+package com.tolmachevroman.paymentapp.views.adapters;
 
 import android.view.View;
 

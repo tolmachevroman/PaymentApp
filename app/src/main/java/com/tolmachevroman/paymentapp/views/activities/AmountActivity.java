@@ -1,4 +1,4 @@
-package com.tolmachevroman.paymentapp.views;
+package com.tolmachevroman.paymentapp.views.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
