@@ -15,7 +15,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
 import retrofit2.Retrofit;
-import retrofit2.converter.moshi.MoshiConverterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by romantolmachev on 12/12/2017.
@@ -36,13 +36,12 @@ public class NetModule {
         return retrofit.create(WebService.class);
     }
 
-
     @Provides
     @Singleton
     Retrofit provideRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .addConverterFactory(MoshiConverterFactory.create())
                 .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
     }
@@ -56,7 +55,7 @@ public class NetModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkhttpClient(Cache cache, Interceptor interceptor) {
+    OkHttpClient provideOkHttpClient(Cache cache, Interceptor interceptor) {
         OkHttpClient.Builder client = new OkHttpClient.Builder().addInterceptor(interceptor);
         client.cache(cache);
         return client.build();

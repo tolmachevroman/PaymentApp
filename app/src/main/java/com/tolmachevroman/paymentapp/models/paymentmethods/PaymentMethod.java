@@ -9,19 +9,16 @@ import com.google.gson.annotations.SerializedName;
 public class PaymentMethod {
 
     @SerializedName("id")
-    String id;
+    private String id;
 
     @SerializedName("payment_type_id")
-    String paymentTypeId;
-
-    @SerializedName("status")
-    String status;
+    private String paymentTypeId;
 
     @SerializedName("thumbnail")
-    String thumbnail;
+    private String thumbnail;
 
     @SerializedName("name")
-    String name;
+    private String name;
 
     public String getId() {
         return id;
@@ -29,10 +26,6 @@ public class PaymentMethod {
 
     public String getPaymentTypeId() {
         return paymentTypeId;
-    }
-
-    public String getStatus() {
-        return status;
     }
 
     public String getThumbnail() {
