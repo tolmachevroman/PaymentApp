@@ -69,10 +69,10 @@ public class AmountActivityTest {
     }
 
     /**
-     * Check that non zero amount successfully continues to PaymentMethodActivity, with amount in extras
+     * Check that non zero amount successfully starts PaymentMethodActivity, with amount in extras
      */
     @Test
-    public void nonZeroAmountContinuesToPaymentMethodActivity() {
+    public void nonZeroAmountStartsPaymentMethodActivity() {
         onView(withId(R.id.amountTxt)).perform(typeText("1"), pressImeActionButton());
         intended(allOf(hasExtra(Constants.AMOUNT, "1"), hasComponent(PaymentMethodActivity.class.getName())));
     }
