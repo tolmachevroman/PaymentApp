@@ -55,6 +55,8 @@ public class PaymentMethodActivity extends AppCompatActivity {
             @Override
             public void onClick(View view, int position) {
                 System.out.println("Clicked: " + paymentMethods.get(position).getName());
+                Bundle args = new Bundle(getIntent().getExtras());
+                //TODO start new activity with args
             }
         });
 
