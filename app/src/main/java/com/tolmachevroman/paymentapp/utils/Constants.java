@@ -11,5 +11,7 @@ public class Constants {
 
     public static final String AMOUNT = "AMOUNT";
     public static final String PAYMENT_METHOD_ID = "PAYMENT_METHOD_ID";
+    public static final String ISSUER_ID = "ISSUER_ID";
+    public static final String INSTALLMENT = "INSTALLMENT";
 
 }

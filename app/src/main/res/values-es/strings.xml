@@ -5,4 +5,10 @@
     <string name="please_input_amount_toast">Por favor, ingresa monto de pago</string>
     <string name="please_select_payment_method">Por favor, selecciona medio de pago</string>
     <string name="please_select_bank">Por favor, selecciona banco</string>
+    <string name="please_select_payment_shares">Por favor, selecciona cuotas</string>
+
+    <string name="amount">Monto: %s</string>
+    <string name="payment_method">Medio de pago: %s</string>
+    <string name="issuer">Banco: %s</string>
+    <string name="installment">Cuotas: %s</string>
 </resources>

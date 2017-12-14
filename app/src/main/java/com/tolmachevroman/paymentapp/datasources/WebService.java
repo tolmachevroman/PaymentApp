@@ -1,6 +1,7 @@
 package com.tolmachevroman.paymentapp.datasources;
 
 import com.tolmachevroman.paymentapp.models.banks.Bank;
+import com.tolmachevroman.paymentapp.models.installments.Installment;
 import com.tolmachevroman.paymentapp.models.paymentmethods.PaymentMethod;
 
 import java.util.List;
@@ -20,4 +21,10 @@ public interface WebService {
     @GET("payment_methods/card_issuers")
     Call<List<Bank>> getBanks(@Query("public_key") String publicKey,
                               @Query("payment_method_id") String paymentMethodId);
+
+    @GET("payment_methods/installments")
+    Call<List<Installment>> getInstallments(@Query("public_key") String publicKey,
+                                            @Query("amount") String amount,
+                                            @Query("payment_method_id") String paymentMethodId,
+                                            @Query("issuer.id") String issuerId);
 }

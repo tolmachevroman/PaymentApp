@@ -34,6 +34,11 @@ public class BanksRepository {
         this.utils = utils;
     }
 
+    /**
+     * Loads Banks from web service. In a more complicated app, it would use generic class like
+     * NetworkBoundResource from Addendum in new architecture components
+     *
+     */
     public LiveData<Resource<List<Bank>>> getBanks(String paymentMethodId) {
 
         final MutableLiveData<Resource<List<Bank>>> result = new MutableLiveData<>();
@@ -55,7 +60,7 @@ public class BanksRepository {
 
                 @Override
                 public void onFailure(Call<List<Bank>> call, Throwable t) {
-                    result.setValue(Resource.<List<Bank>>error(null, null));
+                    result.setValue(Resource.<List<Bank>>error(new Error(0, t.getMessage()), null));
                 }
             });
         } else {

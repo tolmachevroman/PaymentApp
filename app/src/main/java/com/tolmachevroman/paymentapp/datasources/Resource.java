@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
  *
  * @param <T>
  */
+
 public class Resource<T> {
 
     public enum Status {

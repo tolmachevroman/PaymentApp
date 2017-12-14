@@ -16,10 +16,11 @@ import android.widget.Toast;
 import com.tolmachevroman.paymentapp.R;
 import com.tolmachevroman.paymentapp.datasources.Error;
 import com.tolmachevroman.paymentapp.datasources.Resource;
-import com.tolmachevroman.paymentapp.models.banks.Bank;
+import com.tolmachevroman.paymentapp.models.installments.Installment;
+import com.tolmachevroman.paymentapp.models.installments.PayerCost;
 import com.tolmachevroman.paymentapp.utils.Constants;
-import com.tolmachevroman.paymentapp.viewmodels.BanksViewModel;
-import com.tolmachevroman.paymentapp.views.adapters.BanksAdapter;
+import com.tolmachevroman.paymentapp.viewmodels.PaymentSharesViewModel;
+import com.tolmachevroman.paymentapp.views.adapters.InstallmentsAdapter;
 import com.tolmachevroman.paymentapp.views.adapters.RecyclerViewClickListener;
 
 import java.util.ArrayList;
@@ -31,62 +32,49 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 
-public class BanksActivity extends AppCompatActivity {
-
-    static final int INSTALLMENTS_REQUEST = 102;
+public class PaymentSharesActivity extends AppCompatActivity {
 
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
-    @BindView(R.id.banksRcl)
-    RecyclerView banksView;
+    @BindView(R.id.installmentsRcl)
+    RecyclerView installmentsView;
 
-    private List<Bank> banks;
-    private BanksAdapter banksAdapter;
+    private List<PayerCost> payerCosts;
+    private InstallmentsAdapter installmentsAdapter;
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == INSTALLMENTS_REQUEST && resultCode == RESULT_OK) {
-            Intent intent = new Intent();
-            intent.putExtras(data);
-            setResult(RESULT_OK, intent);
-            finish();
-        }
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_banks);
+        setContentView(R.layout.activity_payment_shares);
         ButterKnife.bind(this);
 
-        banks = new ArrayList<>();
-        banksAdapter = new BanksAdapter(banks, new RecyclerViewClickListener() {
+        payerCosts = new ArrayList<>();
+        installmentsAdapter = new InstallmentsAdapter(payerCosts, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                String bankId = banks.get(position).getId();
-                if (bankId != null) {
-                    Bundle args = new Bundle(getIntent().getExtras());
-                    args.putString(Constants.ISSUER_ID, bankId);
-
-                    Intent intent = new Intent(BanksActivity.this, PaymentSharesActivity.class);
+                Intent intent = new Intent();
+                Bundle args = getIntent().getExtras();
+                if(args != null) {
+                    args.putString(Constants.INSTALLMENT, payerCosts.get(position).getRecommendedMessage());
                     intent.putExtras(args);
-                    startActivityForResult(intent, INSTALLMENTS_REQUEST);
                 }
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
 
-        banksView.setLayoutManager(new LinearLayoutManager(this));
-        banksView.setAdapter(banksAdapter);
+        installmentsView.setLayoutManager(new LinearLayoutManager(this));
+        installmentsView.setAdapter(installmentsAdapter);
 
-        BanksViewModel banksViewModel = ViewModelProviders.of(this, viewModelFactory).get(BanksViewModel.class);
-        banksViewModel.banks.observe(this, new Observer<Resource<List<Bank>>>() {
+        PaymentSharesViewModel paymentSharesViewModel = ViewModelProviders.of(this, viewModelFactory).get(PaymentSharesViewModel.class);
+        paymentSharesViewModel.installments.observe(this, new Observer<Resource<List<Installment>>>() {
             @Override
-            public void onChanged(@Nullable Resource<List<Bank>> resource) {
+            public void onChanged(@Nullable Resource<List<Installment>> resource) {
 
                 if (resource != null) {
                     switch (resource.status) {
@@ -94,7 +82,7 @@ public class BanksActivity extends AppCompatActivity {
                         case SUCCESS:
                             hideLoading();
                             if (resource.data != null && !resource.data.isEmpty())
-                                showData(resource.data);
+                                showData(resource.data.get(0).getPayerCosts());
                             break;
                         case ERROR:
                             hideLoading();
@@ -111,11 +99,12 @@ public class BanksActivity extends AppCompatActivity {
         });
 
         //reuse previously created ViewModel
-        if (banksViewModel.getPaymentMethodId() == null) {
+        if (paymentSharesViewModel.getParameters() == null) {
             String methodPaymentId = getIntent().getStringExtra(Constants.PAYMENT_METHOD_ID);
-            banksViewModel.setPaymentMethodId(methodPaymentId);
+            String amount = getIntent().getStringExtra(Constants.AMOUNT);
+            String issuerId = getIntent().getStringExtra(Constants.ISSUER_ID);
+            paymentSharesViewModel.setParameters(new PaymentSharesViewModel.Parameters(methodPaymentId, amount, issuerId));
         }
-
     }
 
     private void showLoading() {
@@ -130,9 +119,9 @@ public class BanksActivity extends AppCompatActivity {
         Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show();
     }
 
-    private void showData(List<Bank> data) {
-        banks.clear();
-        banks.addAll(data);
-        banksAdapter.notifyDataSetChanged();
+    private void showData(List<PayerCost> data) {
+        payerCosts.clear();
+        payerCosts.addAll(data);
+        installmentsAdapter.notifyDataSetChanged();
     }
 }
