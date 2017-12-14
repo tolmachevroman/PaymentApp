@@ -21,8 +21,6 @@ import retrofit2.Response;
 
 /**
  * Created by romantolmachev on 12/12/2017.
- * <p>
- * Payment process implies internet connection, so this and other repos don't store data in database.
  */
 
 @Singleton
@@ -69,7 +67,7 @@ public class PaymentMethodsRepository {
 
                 @Override
                 public void onFailure(Call<List<PaymentMethod>> call, Throwable t) {
-                    result.setValue(Resource.<List<PaymentMethod>>error(null, null));
+                    result.setValue(Resource.<List<PaymentMethod>>error(new Error(0, t.getMessage()), null));
                 }
             });
         } else {

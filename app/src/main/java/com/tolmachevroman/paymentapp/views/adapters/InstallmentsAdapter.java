@@ -53,7 +53,7 @@ public class InstallmentsAdapter extends RecyclerView.Adapter<InstallmentsAdapte
 
         private RecyclerViewClickListener recyclerViewClickListener;
 
-        public ViewHolder(View itemView, RecyclerViewClickListener recyclerViewClickListener) {
+        ViewHolder(View itemView, RecyclerViewClickListener recyclerViewClickListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.recyclerViewClickListener = recyclerViewClickListener;

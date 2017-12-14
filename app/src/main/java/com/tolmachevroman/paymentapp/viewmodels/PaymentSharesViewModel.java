@@ -29,6 +29,9 @@ public class PaymentSharesViewModel extends ViewModel {
         this.repository = repository;
     }
 
+    /**
+     * Fetches banks from repository, based on the parameters
+     */
     public LiveData<Resource<List<Installment>>> installments = Transformations.switchMap(parameters, new Function<Parameters, LiveData<Resource<List<Installment>>>>() {
         @Override
         public LiveData<Resource<List<Installment>>> apply(Parameters input) {
@@ -44,6 +47,9 @@ public class PaymentSharesViewModel extends ViewModel {
         this.parameters.setValue(parameters);
     }
 
+    /**
+     * Wrapper for parameters used in repository.getInstallments()
+     */
     public static class Parameters {
         String paymentMethodId;
         String amount;

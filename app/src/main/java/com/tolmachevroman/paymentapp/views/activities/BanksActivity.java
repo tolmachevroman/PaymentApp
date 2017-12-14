@@ -110,6 +110,7 @@ public class BanksActivity extends AppCompatActivity {
             }
         });
 
+        //reuse previously created ViewModel
         if (banksViewModel.getPaymentMethodId() == null) {
             String methodPaymentId = getIntent().getStringExtra(Constants.PAYMENT_METHOD_ID);
             banksViewModel.setPaymentMethodId(methodPaymentId);

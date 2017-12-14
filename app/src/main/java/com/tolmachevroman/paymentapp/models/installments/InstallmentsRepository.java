@@ -55,7 +55,7 @@ public class InstallmentsRepository {
 
                 @Override
                 public void onFailure(Call<List<Installment>> call, Throwable t) {
-                    result.setValue(Resource.<List<Installment>>error(null, null));
+                    result.setValue(Resource.<List<Installment>>error(new Error(0, t.getMessage()), null));
                 }
             });
         } else {

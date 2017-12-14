@@ -60,7 +60,7 @@ public class BanksAdapter extends RecyclerView.Adapter<BanksAdapter.ViewHolder> 
         private RecyclerViewClickListener recyclerViewClickListener;
         private Context context;
 
-        public ViewHolder(View itemView, RecyclerViewClickListener recyclerViewClickListener) {
+        ViewHolder(View itemView, RecyclerViewClickListener recyclerViewClickListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.recyclerViewClickListener = recyclerViewClickListener;

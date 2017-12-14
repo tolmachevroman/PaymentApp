@@ -60,7 +60,7 @@ public class WebServiceTest {
     }
 
     @Test
-    public void getPaymentMethods() throws IOException {
+    public void shouldReturnSuccessOnValidGetPaymentMethods() throws IOException {
 
         InputStream in = this.getClass().getClassLoader().getResourceAsStream("payment_methods.json");
         String content = Utils.convertStreamToString(in);

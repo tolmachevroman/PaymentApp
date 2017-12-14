@@ -84,12 +84,21 @@ public class PaymentRepositoryTest {
 
         repository.getPaymentMethods().observeForever(observer);
 
-        verify(observer, timeout(1000)).onChanged(argThat(new Error404NotFoundMatcher<List<PaymentMethod>>()));
+        verify(observer, timeout(1000)).onChanged(argThat(new ErrorMatcher<List<PaymentMethod>>()));
     }
 
     @Test
-    public void shouldReturnResourceSuccess() {
+    public void shouldReturnResourceErrorOnNoConnection() {
 
+        when(utils.hasConnection()).thenReturn(false);
+
+        repository.getPaymentMethods().observeForever(observer);
+
+        verify(observer, timeout(1000)).onChanged(argThat(new ErrorMatcher<List<PaymentMethod>>()));
+    }
+
+    @Test
+    public void shouldReturnResourceSuccessOnValidResponse() {
 
         InputStream in = this.getClass().getClassLoader().getResourceAsStream("payment_methods.json");
         String content = Utils.convertStreamToString(in);
@@ -106,21 +115,20 @@ public class PaymentRepositoryTest {
     }
 
 
-
     class SuccessMatcher<T> implements ArgumentMatcher<Resource<T>> {
         @Override
         public boolean matches(Resource<T> argument) {
-            if(argument != null) {
+            if (argument != null) {
                 return (argument.status == Resource.Status.SUCCESS && argument.data != null);
             } else return false;
         }
     }
 
-    class Error404NotFoundMatcher<T> implements ArgumentMatcher<Resource<T>> {
+    class ErrorMatcher<T> implements ArgumentMatcher<Resource<T>> {
         @Override
         public boolean matches(Resource<T> argument) {
-            if (argument != null && argument.error != null) {
-                return (argument.status == Resource.Status.ERROR && argument.error.getCode() == 404);
+            if (argument != null) {
+                return (argument.status == Resource.Status.ERROR);
             } else return false;
         }
     }

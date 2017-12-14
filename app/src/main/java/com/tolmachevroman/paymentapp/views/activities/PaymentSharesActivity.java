@@ -98,6 +98,7 @@ public class PaymentSharesActivity extends AppCompatActivity {
             }
         });
 
+        //reuse previously created ViewModel
         if (paymentSharesViewModel.getParameters() == null) {
             String methodPaymentId = getIntent().getStringExtra(Constants.PAYMENT_METHOD_ID);
             String amount = getIntent().getStringExtra(Constants.AMOUNT);

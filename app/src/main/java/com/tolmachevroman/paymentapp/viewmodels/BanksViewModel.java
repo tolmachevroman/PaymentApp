@@ -21,7 +21,6 @@ import javax.inject.Inject;
 public class BanksViewModel extends ViewModel {
 
     private BanksRepository repository;
-
     private MutableLiveData<String> paymentMethodId = new MutableLiveData<>();
 
     @Inject
@@ -29,6 +28,9 @@ public class BanksViewModel extends ViewModel {
         this.repository = repository;
     }
 
+    /**
+     * Fetches banks from repository, based on the paymentMethodId
+     */
     public LiveData<Resource<List<Bank>>> banks = Transformations.switchMap(paymentMethodId, new Function<String, LiveData<Resource<List<Bank>>>>() {
         @Override
         public LiveData<Resource<List<Bank>>> apply(String input) {

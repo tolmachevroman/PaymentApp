@@ -40,6 +40,7 @@ public class AmountActivity extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
+            //Clear text field if starts with zero
             String input = s.toString();
             if (input.length() > 0 && input.charAt(0) == '0') {
                 s.replace(0, 1, "");
